@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import type { CreateUserDto } from '../domain/dto/create-user.dto';
 import type { UpdateUserDto } from '../domain/dto/update-user.dto';
 import type { CreateUserService } from '../services/create.service';
@@ -6,12 +6,13 @@ import type { FindAllUsersService } from '../services/find-all.service';
 import type { FindOneUserService } from '../services/find-one.service';
 import type { UpdateUserService } from '../services/update.service';
 import type { DeleteUserService } from '../services/remove.service';
+import { AuthGuard } from 'src/shared/guards/auth.guard';
 
 
 @Controller('users')
+@UseGuards(AuthGuard)
 export class UserController {
   constructor(
-    // Injeta os Casos de Uso diretamente
     private readonly createService: CreateUserService,
     private readonly findAllService: FindAllUsersService,
     private readonly findOneService: FindOneUserService,

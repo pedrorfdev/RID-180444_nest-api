@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./domain/entities/user";
 import { USER_REPOSITORY_TOKEN } from "./domain/repositories/IUser.repository";
@@ -9,23 +9,24 @@ import { FindAllUsersService } from "./services/find-all.service";
 import { FindOneUserService } from "./services/find-one.service";
 import { UpdateUserService } from "./services/update.service";
 import { DeleteUserService } from "./services/remove.service";
-import { FindUserForAuthService } from "./services/find-user-for-auth.service";
+import { FindByEmailService } from "./services/find-by-email.service";
+import { AuthModule } from "../auth/auth.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule)],
   controllers: [UserController],
   providers: [
-    {
-      provide: USER_REPOSITORY_TOKEN,
-      useClass: UserRepository
-    },
     CreateUserService,
     FindAllUsersService,
     FindOneUserService,
+    FindByEmailService,
     UpdateUserService,
     DeleteUserService,
-    FindUserForAuthService,
+    {
+      provide: USER_REPOSITORY_TOKEN,
+      useClass: UserRepository
+    }
   ],
-  exports: [TypeOrmModule, FindUserForAuthService]
+  exports: [TypeOrmModule]
 })
 export class UserModule{}

@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
-import { USER_REPOSITORY_TOKEN, type IUserRepository, type UserWithoutPassword } from "../domain/repositories/IUser.repository";
+import { USER_REPOSITORY_TOKEN, type IUserRepository } from "../domain/repositories/IUser.repository";
 import type { CreateUserDto } from "../domain/dto/create-user.dto";
 import { User } from "../domain/entities/user";
 import bcrypt from "node_modules/bcryptjs";
@@ -11,11 +11,8 @@ export class CreateUserService {
     private readonly userRepository: IUserRepository,
   ) {}
 
-  async execute(createUserDto: CreateUserDto): Promise<UserWithoutPassword> {
-    const existingUser = await this.userRepository.findByUsernameOrEmail(
-      createUserDto.username,
-      createUserDto.email,
-    );
+  async execute(createUserDto: CreateUserDto): Promise<User> {
+    const existingUser = await this.userRepository.findByEmail(createUserDto.email);
 
     if (existingUser) {
       throw new BadRequestException('Nome de usuário ou Email já em uso.');

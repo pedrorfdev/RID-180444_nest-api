@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
-import { USER_REPOSITORY_TOKEN, type IUserRepository, type UserWithoutPassword } from '../domain/repositories/IUser.repository';
+import { USER_REPOSITORY_TOKEN, type IUserRepository } from '../domain/repositories/IUser.repository';
 import type { UpdateUserDto } from '../domain/dto/update-user.dto';
 import type { User } from '../domain/entities/user';
 
@@ -11,7 +11,7 @@ export class UpdateUserService {
     private readonly userRepository: IUserRepository,
   ) {}
 
-  async execute(id: number, updateUserDto: UpdateUserDto): Promise<UserWithoutPassword> {
+  async execute(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const userToUpdate = await this.userRepository.findOne(id);
     if (!userToUpdate) {
       throw new NotFoundException(`Usuário com ID "${id}" não encontrado`);

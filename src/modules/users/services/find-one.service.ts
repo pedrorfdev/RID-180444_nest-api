@@ -1,5 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { USER_REPOSITORY_TOKEN, type IUserRepository, type UserWithoutPassword } from "../domain/repositories/IUser.repository";
+import { USER_REPOSITORY_TOKEN, type IUserRepository } from "../domain/repositories/IUser.repository";
+import type { User } from "../domain/entities/user";
 
 
 @Injectable()
@@ -9,7 +10,7 @@ export class FindOneUserService {
     private readonly userRepository: IUserRepository,
   ) {}
 
-  async execute(id: number): Promise<UserWithoutPassword> {
+  async execute(id: number): Promise<User> {
     return this.userRepository.findOne(id);
   }
 }
