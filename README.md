@@ -385,7 +385,8 @@ titan-core-api/
 ├── docker-compose.yml         # Configuração Docker
 ├── package.json
 ├── tsconfig.json
-└── README.pt-BR.md
+├── README.md                   # Documentação em Português (padrão)
+└── README.en-US.md            # English documentation
 ```
 
 ---
