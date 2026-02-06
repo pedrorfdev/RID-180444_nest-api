@@ -20,7 +20,7 @@ export class AuthService {
     const payload = { sub: user.id, name: user.name };
     const options = {
       expiresIn: 60 * 60 * 60 * 24, //1d
-      issuer: 'nest-api-auth',
+      issuer: 'titan-core-api-auth',
       audience: 'users',
     };
     
@@ -66,7 +66,7 @@ export class AuthService {
     try {
       const decoded = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
-        issuer: 'nest-api-auth',
+        issuer: 'titan-core-api-auth',
         audience: 'users',
       });
 

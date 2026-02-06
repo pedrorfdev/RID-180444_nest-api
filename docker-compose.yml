@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:latest
-    container_name: mysql_nestjs_db
+    container_name: mysql_titan_core_db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
       MYSQL_DATABASE: ${MYSQL_NAME} 
@@ -10,11 +10,11 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - nestjs_network
+      - titan_core_network
 
   phpmyadmin: 
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin_nestjs
+    container_name: phpmyadmin_titan_core
     restart: always
     ports:
       - "${PHPMYADMIN_PORT}:80"
@@ -22,10 +22,10 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
-      - nestjs_network
+      - titan_core_network
     depends_on:
       - db
 
 networks:
-  nestjs_network:
+  titan_core_network:
     driver: bridge
